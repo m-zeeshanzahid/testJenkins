@@ -12,23 +12,31 @@ pipeline {
   options {
     buildDiscarder logRotator(artifactDaysToKeepStr: '', artifactNumToKeepStr: '', daysToKeepStr: '', numToKeepStr: '100')
   }
-  stages { stage('Cross-account access') { steps { script {
+  stage('build') {
+    steps { script {
+      sh """#!/bin/bash
+         python --version
+         python Hello.py
+         """
+    } }
+  }
+  // stages { stage('Cross-account access') { steps { script {
 
-    if (params.Execution_Type == "serverProvisioning") {
-        // Put your AWS code here
-        sh """#!/bin/bash
-        python --version
-        """
-        // python TemplateScripts/ServerProvisioning/ServerPreDeployment/ec2_deploy.py ${params.TICKET_NUMBER}
-        // python TemplateScripts/ServerProvisioning/ServerPostDeployment/postDeployment.py
-    }
-    if (params.Execution_Type == "serverTermination") {
-        // Put your AWS code here
-        sh """#!/bin/bash
-        python --version
-        """
-        // python TemplateScripts/ServerDecommission/ServerDecommission.py
-    }
+  //   if (params.Execution_Type == "serverProvisioning") {
+  //       // Put your AWS code here
+  //       sh """#!/bin/bash
+  //       python --version
+  //       """
+  //       // python TemplateScripts/ServerProvisioning/ServerPreDeployment/ec2_deploy.py ${params.TICKET_NUMBER}
+  //       // python TemplateScripts/ServerProvisioning/ServerPostDeployment/postDeployment.py
+  //   }
+  //   if (params.Execution_Type == "serverTermination") {
+  //       // Put your AWS code here
+  //       sh """#!/bin/bash
+  //       python --version
+  //       """
+  //       // python TemplateScripts/ServerDecommission/ServerDecommission.py
+  //   }
     
-  }}}}
+  // }}}}
 }
