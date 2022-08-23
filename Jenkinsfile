@@ -30,6 +30,5 @@ pipeline {
         // python TemplateScripts/ServerDecommission/ServerDecommission.py
     }
     
-  
   }}}}
 }
