@@ -9,15 +9,14 @@ pipeline {
     string(name: 'TICKET_NUMBER', description: 'Get a ticket Number')
     string(name: 'Execution_Type', description: 'Add the execution type')
   }
-  options {
-    buildDiscarder logRotator(artifactDaysToKeepStr: '', artifactNumToKeepStr: '', daysToKeepStr: '', numToKeepStr: '100')
-  }
   stage('build') {
     steps { script {
-      sh """#!/bin/bash
-         python --version
-         python Hello.py
-         """
+      if (params.Execution_Type == "serverProvisioning") {
+        sh """#!/bin/bash
+          python --version
+          python Hello.py
+          """
+      }
     } }
   }
   // stages { stage('Cross-account access') { steps { script {
