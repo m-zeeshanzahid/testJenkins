@@ -13,13 +13,13 @@ pipeline {
   stage('build') {
     steps { 
       script {
-      // if (params.Execution_Type == "serverProvisioning") {
+      if (params.Execution_Type == "serverProvisioning") {
         // #!/bin/bash
         sh """
           echo python --version
           python Hello.py
           """
-      // }
+      }
     } }
   }
   // stages { stage('Cross-account access') { steps { script {
