@@ -14,7 +14,8 @@ pipeline {
     steps { 
       script {
       // if (params.Execution_Type == "serverProvisioning") {
-        sh """#!/bin/bash
+        // #!/bin/bash
+        sh """
           echo python --version
           python Hello.py
           """
