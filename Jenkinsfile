@@ -11,13 +11,14 @@ pipeline {
     string(name: 'Execution_Type', description: 'Add the execution type')
   }
   stage('build') {
-    steps { script {
-      if (params.Execution_Type == "serverProvisioning") {
+    steps { 
+      script {
+      // if (params.Execution_Type == "serverProvisioning") {
         sh """#!/bin/bash
           python --version
           python Hello.py
           """
-      }
+      // }
     } }
   }
   // stages { stage('Cross-account access') { steps { script {
