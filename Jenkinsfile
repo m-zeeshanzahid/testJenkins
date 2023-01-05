@@ -25,7 +25,6 @@ pipeline {
     }
   stages {
     stage('Terraform init') {
-      when { branch 'master' }
           steps {
             script {
               try {
