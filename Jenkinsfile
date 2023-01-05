@@ -12,7 +12,7 @@ pipeline {
       //  TF_VAR_gateway_name= "${gateway}"
     }
     parameters {
-        choice(name: 'resource_type',choices: ['EC2', 'RDS', 'S3', 'SSM'],)
+        choice(name: 'resource_type',choices: ['EC2', 'RDS', 'S3', 'SSM'],),
         // string(name: 'resource_name', defaultValue: 'ec2', description: 'give resource name',)
         
         activeChoiceReactiveParam('service_name') {
@@ -32,11 +32,11 @@ pipeline {
             referencedParameter('resource_type')
         }
 
-        choice(name: 'resource_type', script{if (resource_name == "EC2") {
-          return ["Instances", "Load Balancers", "Security Groups"]
-        } else if (resource_name == "SSM") {
-          return ["Run Command", "Documents"]
-        }})
+        // choice(name: 'resource_type', script{if (resource_name == "EC2") {
+        //   return ["Instances", "Load Balancers", "Security Groups"]
+        // } else if (resource_name == "SSM") {
+        //   return ["Run Command", "Documents"]
+        // }})
         // string(name: 'resource_type', defaultValue: 'instances', description: 'select resource type',)
         
     }
