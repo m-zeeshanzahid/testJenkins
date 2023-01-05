@@ -15,7 +15,7 @@ pipeline {
         choice(name: 'resource_name',choices: ['EC2', 'RDS', 'S3', 'SSM'],)
         // string(name: 'resource_name', defaultValue: 'ec2', description: 'give resource name',)
         
-        choice(name: 'resource_type',choices: script{if (resource_name == "EC2") {
+        choice(name: 'resource_type', script{if (resource_name == "EC2") {
           return ["Instances", "Load Balancers", "Security Groups"]
         } else if (resource_name == "SSM") {
           return ["Run Command", "Documents"]
