@@ -11,56 +11,57 @@ pipeline {
       //  TF_VAR_gateway_base_ami="${NETWORK}"
       //  TF_VAR_gateway_name= "${gateway}"
     }
-    parameters {[
-      [$class: 'ChoiceParameter', 
-          choiceType: 'PT_SINGLE_SELECT', 
-          description: 'Select the Service Name from the Dropdown List', 
-          filterLength: 1, 
-          filterable: false, 
-          name: 'Service_Name', 
-          script: [
-              $class: 'GroovyScript', 
-              fallbackScript: [
-                  classpath: [], 
-                  sandbox: false, 
-                  script: 
-                      "return['Could not get the services']"
-              ], 
-              script: [
-                  classpath: [], 
-                  sandbox: false, 
-                  script: 
-                      "return['EC2','SSM','RDS']"
-              ]
-          ]
-      ],
-      [$class: 'CascadeChoiceParameter', 
-          choiceType: 'PT_SINGLE_SELECT', 
-          description: 'Select the service type from the Dropdown List',
-          name: 'Service_Type', 
-          referencedParameters: 'Service_Name', 
-          script: 
-              [$class: 'GroovyScript', 
-              fallbackScript: [
-                      classpath: [], 
-                      sandbox: false, 
-                      script: "return['Could not get Service from Service Param']"
-                      ], 
-              script: [
-                      classpath: [], 
-                      sandbox: false, 
-                      script: '''
-                      if(resource_type.equals("EC2")) 
-                          { return ["Instances", "Volumes", "AMI"] } 
-                      else if(resource_type.equals("SSM")) 
-                          { return ["Run Command", "Automation", "Document"] } 
-                      else
-                          { return ["Empty"] } 
-                      '''
-                  ] 
-          ]
-      ]
-    ]
+    parameters {
+    // [
+    //   [$class: 'ChoiceParameter', 
+    //       choiceType: 'PT_SINGLE_SELECT', 
+    //       description: 'Select the Service Name from the Dropdown List', 
+    //       filterLength: 1, 
+    //       filterable: false, 
+    //       name: 'Service_Name', 
+    //       script: [
+    //           $class: 'GroovyScript', 
+    //           fallbackScript: [
+    //               classpath: [], 
+    //               sandbox: false, 
+    //               script: 
+    //                   "return['Could not get the services']"
+    //           ], 
+    //           script: [
+    //               classpath: [], 
+    //               sandbox: false, 
+    //               script: 
+    //                   "return['EC2','SSM','RDS']"
+    //           ]
+    //       ]
+    //   ],
+    //   [$class: 'CascadeChoiceParameter', 
+    //       choiceType: 'PT_SINGLE_SELECT', 
+    //       description: 'Select the service type from the Dropdown List',
+    //       name: 'Service_Type', 
+    //       referencedParameters: 'Service_Name', 
+    //       script: 
+    //           [$class: 'GroovyScript', 
+    //           fallbackScript: [
+    //                   classpath: [], 
+    //                   sandbox: false, 
+    //                   script: "return['Could not get Service from Service Param']"
+    //                   ], 
+    //           script: [
+    //                   classpath: [], 
+    //                   sandbox: false, 
+    //                   script: '''
+    //                   if(resource_type.equals("EC2")) 
+    //                       { return ["Instances", "Volumes", "AMI"] } 
+    //                   else if(resource_type.equals("SSM")) 
+    //                       { return ["Run Command", "Automation", "Document"] } 
+    //                   else
+    //                       { return ["Empty"] } 
+    //                   '''
+    //               ] 
+    //       ]
+    //   ]
+    // ]
 
         // choice(name: 'resource_type', choices: ['EC2', 'RDS', 'S3', 'SSM'],)
         // string(name: 'resource_name', defaultValue: 'ec2', description: 'give resource name',)
@@ -90,6 +91,64 @@ pipeline {
         
     }
   stages {
+    stage('Parameters'){
+      steps {
+          script {
+          properties([
+                  parameters([
+                      [$class: 'ChoiceParameter', 
+                          choiceType: 'PT_SINGLE_SELECT', 
+                          description: 'Select the Service Name from the Dropdown List', 
+                          filterLength: 1, 
+                          filterable: false, 
+                          name: 'Service_Name', 
+                          script: [
+                              $class: 'GroovyScript', 
+                              fallbackScript: [
+                                  classpath: [], 
+                                  sandbox: false, 
+                                  script: 
+                                      "return['Could not get the services']"
+                              ], 
+                              script: [
+                                  classpath: [], 
+                                  sandbox: false, 
+                                  script: 
+                                      "return['EC2','SSM','RDS']"
+                              ]
+                          ]
+                      ],
+                      [$class: 'CascadeChoiceParameter', 
+                          choiceType: 'PT_SINGLE_SELECT', 
+                          description: 'Select the service type from the Dropdown List',
+                          name: 'Service_Type', 
+                          referencedParameters: 'Service_Name', 
+                          script: 
+                              [$class: 'GroovyScript', 
+                              fallbackScript: [
+                                      classpath: [], 
+                                      sandbox: false, 
+                                      script: "return['Could not get Service from Service Param']"
+                                      ], 
+                              script: [
+                                      classpath: [], 
+                                      sandbox: false, 
+                                      script: '''
+                                      if(resource_type.equals("EC2")) 
+                                          { return ["Instances", "Volumes", "AMI"] } 
+                                      else if(resource_type.equals("SSM")) 
+                                          { return ["Run Command", "Automation", "Document"] } 
+                                      else
+                                          { return ["Empty"] } 
+                                      '''
+                                  ] 
+                          ]
+                      ]
+                  ])
+              ])
+          }
+      }
+  }
     stage('Initial') {
           steps {
             script {
