@@ -30,6 +30,7 @@ pipeline {
                 fallbackScript('return ["error"]')
             }
             referencedParameter('resource_type')
+        }
 
         choice(name: 'resource_type', script{if (resource_name == "EC2") {
           return ["Instances", "Load Balancers", "Security Groups"]
