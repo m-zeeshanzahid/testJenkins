@@ -12,9 +12,8 @@ pipeline {
       //  TF_VAR_gateway_name= "${gateway}"
     }
     parameters {
-        choice(name: 'resource_type',choices: ['EC2', 'RDS', 'S3', 'SSM'],),
+        choice(name: 'resource_type', defaultValue: ' ', choices: ['EC2', 'RDS', 'S3', 'SSM'],)
         // string(name: 'resource_name', defaultValue: 'ec2', description: 'give resource name',)
-        
         activeChoiceReactiveParam('service_name') {
             description('select your choice')
             choiceType('RADIO')
