@@ -11,7 +11,7 @@ pipeline {
       //  TF_VAR_gateway_base_ami="${NETWORK}"
       //  TF_VAR_gateway_name= "${gateway}"
     }
-    parameters {
+    // parameters {
     // [
     //   [$class: 'ChoiceParameter', 
     //       choiceType: 'PT_SINGLE_SELECT', 
@@ -89,7 +89,7 @@ pipeline {
         // }})
         // string(name: 'resource_type', defaultValue: 'instances', description: 'select resource type',)
         
-    }
+    // }
   stages {
     stage('Parameters'){
       steps {
