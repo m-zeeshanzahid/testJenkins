@@ -30,7 +30,7 @@ pipeline {
               try {
                     sh '''
                         echo $resource_name
-                        python --version
+                        python3 --version
                         python3 Hello.py
                      '''
                 } catch (err) {
